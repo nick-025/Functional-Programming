@@ -1,0 +1,8 @@
+# Ignore
+'Trabalho 1 - Pesquisa sobre Currying/'
+*.md
+*.docx
+
+# Keep
+!*README.md
+!.gitignore
