@@ -46,7 +46,7 @@ mdc a b = mdc b (resto a b)
 -}
 
 somaDigitos :: Int -> Int
-somaDigitos x = if x>0 then aux(abs x) else if x<0 then (-1)*aux(abs x) else 0
+somaDigitos x = if x>0 then aux(abs x) else if x<0 then - aux(abs x) else 0
     where
         aux :: Int -> Int
         aux x'
@@ -90,18 +90,19 @@ crivoEuler n = peneira [2..n]
     where
         peneira :: [Int] -> [Int]
         peneira [] = []
-        peneira (p:xs) = p : peneira [x | x <- xs, (resto x p) > 0]
+        peneira (p:xs) = p : peneira [x | x <- xs, 0 /= resto x p]
 
 {-
     7. Nem só de Fibonacci vivem os exemplos de recursão. Escreva uma função que devolva todos os números de uma sequência de Lucas (2, 1, 3, 4, 7, 11, 18, 29, 47, 76, 123) menores que um inteiro dado.
 -}
 
 sequenciaLucas :: Int -> [Int]
-sequenciaLucas n = (if n >= 0 then sequenciaLucas(n-1) ++ [nLucas n] else [])
-    where   nLucas :: Int -> Int
-            nLucas 0 = 2
-            nLucas 1 = 1
-            nLucas n' = nLucas (n'-2) + nLucas (n'-1)
+sequenciaLucas n = filter (<n) $ map nLucas [0..n]
+    where
+        nLucas :: Int -> Int
+        nLucas 0 = 2
+        nLucas 1 = 1
+        nLucas n' = nLucas (n'-2) + nLucas (n'-1)
 
 {-
     8. Escreva uma função, chamada aoContrario em Haskel para reverter uma lista. Dado [1,2,3] devolva [3,2,1].
@@ -162,7 +163,7 @@ main = do
 
     putStrLn ""
     putStrLn "Testes - função 7: sequenciaLucas"
-    putStrLn ("Func.  7: entrada: 10; resultado: "++show(sequenciaLucas 7))
+    putStrLn ("Func.  7: entrada: 7; resultado: "++show(sequenciaLucas 7))
 
     putStrLn ""
     putStrLn "Testes - função 8: aoContrario"
